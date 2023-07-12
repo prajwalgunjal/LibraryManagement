@@ -7,7 +7,8 @@ create table Books(
 	title VARCHAR(50),
     author  VARCHAR(50),
     genre VARCHAR(50),
-    borrowed  VARCHAR(50)
+    --borrowed  VARCHAR(50)
+	 borrowed  bit
 	)
 
 	ALTER TABLE Books
@@ -72,5 +73,13 @@ BEGIN
 	END
 
 	EXEC DisplayAvaliableBooks
-	insert into Books values(9,'i','i','i',1),(10,'u','u','u',1)
-	
+-----insert into Books values(9,'i','i','i',1),(10,'u','u','u',1)
+		------------------------------Display Borrowed Books -------------------------------
+
+CREATE PROCEDURE DisplayBorrowedeBooks
+AS
+BEGIN
+	SELECT * FROM Books where borrowed =  1;
+	END
+
+	EXEC DisplayBorrowedeBooks

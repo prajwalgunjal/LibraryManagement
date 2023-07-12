@@ -10,6 +10,7 @@
                 Console.WriteLine("Press 1 : Add New Book");
                 Console.WriteLine("Press 2 : Display All Books");
                 Console.WriteLine("Press 3 : Display Avaliable Books");
+                Console.WriteLine("Press 4 : Display Borrowed Books");
                 int input = int.Parse(Console.ReadLine());
                 switch (input)
                 {
@@ -42,6 +43,17 @@
                     case 3:
                         {
                             library.get_available_books();
+                            break;
+                        }
+
+                    case 4:
+                        {
+                            library.get_borrowed_books();
+                            break;
+                        }
+                        case 5:
+                        {
+
                             break;
                         }
                 }
