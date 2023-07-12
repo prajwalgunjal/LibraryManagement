@@ -56,9 +56,10 @@ EXEC AddBook
 
 ------------------------------Display Books -------------------------------
 
-CREATE PROCEDURE DisplayBooks
+ALTER PROCEDURE DisplayBooks
 AS
 BEGIN
+	
 	SELECT * FROM Books;
 	END
 
@@ -94,3 +95,25 @@ BEGIN
 	END
 
 	EXEC get_books_by_author 'i'
+	
+			-----------------------------get_books_by_genre-------------------------------
+
+CREATE PROCEDURE get_books_by_genre
+@genre varchar(50)
+AS
+BEGIN
+	SELECT * FROM Books where genre =  @genre;
+	END
+
+	EXEC get_books_by_genre 'i'
+
+				-----------------------------get_books_by_book_id-------------------------------
+
+CREATE PROCEDURE get_books_by_book_id
+@book_id int
+AS
+BEGIN
+	SELECT * FROM Books where book_id =  @book_id;
+	END
+
+	EXEC get_books_by_book_id 8

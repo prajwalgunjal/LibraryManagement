@@ -224,10 +224,99 @@ namespace LibraryManagement
 
         }
 
-        /*public void get_books_by_genre(genre) { }
-        public void borrow_book(book_id, borrower) { }
-        public void return_book(book_id) { }
-        public void get_book_details(book_id) { }*/
+       public bool get_books_by_genre(string genre) {
+            try
+            {
+                List<Book> list = new List<Book>();
+                sqlConnection.Open();
+                string Query = "get_books_by_genre";
+                SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("@genre", genre);
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    Book book = new Book()
+                    {
+                        Book_id = (int)reader["book_id"],
+                        Title = (string)reader["title"],
+                        Author = (string)reader["author"],
+                        Genre = (string)reader["genre"],
+                        Borrowed = (bool)reader["borrowed"],
+                    };
+                    list.Add(book);
+                }
+                foreach (Book book in list)
+                {
+
+                    /* Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
+                         $"\t Genre:- {book.Genre}  \t Borrowed: - {book.Borrowed}");*/
+                    Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
+                        $"\t Genre:- {book.Genre}");
+
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine("Something went wrong");
+                return false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+        }
+        public bool get_book_details(int book_id) {
+            try
+            {
+                List<Book> list = new List<Book>();
+                sqlConnection.Open();
+                string Query = "get_books_by_book_id";
+                SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("@book_id", book_id);
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    Book book = new Book()
+                    {
+                        Book_id = (int)reader["book_id"],
+                        Title = (string)reader["title"],
+                        Author = (string)reader["author"],
+                        Genre = (string)reader["genre"],
+                        Borrowed = (bool)reader["borrowed"],
+                    };
+                    list.Add(book);
+                }
+                foreach (Book book in list)
+                {
+
+                    /* Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
+                         $"\t Genre:- {book.Genre}  \t Borrowed: - {book.Borrowed}");*/
+                    Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
+                        $"\t Genre:- {book.Genre}");
+
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine("Something went wrong");
+                return false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+        }
+        /*public void borrow_book(book_id, borrower) { }
+       public void return_book(book_id) { }
+        */
 
     }
 }

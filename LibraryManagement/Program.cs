@@ -5,13 +5,14 @@
         static void Main(string[] args)
         {
             Library library = new Library();
-           
             while (true) {
                 Console.WriteLine("Press 1 : Add New Book");
                 Console.WriteLine("Press 2 : Display All Books");
                 Console.WriteLine("Press 3 : Display Avaliable Books");
                 Console.WriteLine("Press 4 : Display Borrowed Books");
-                Console.WriteLine("Press 5 : Display Books Bt Author Name");
+                Console.WriteLine("Press 5 : Display Books By Author Name");
+                Console.WriteLine("Press 6 : Display Books By Genre Name");
+                Console.WriteLine("Press 7 : Display Books By Id");
                 int input = int.Parse(Console.ReadLine());
                 switch (input)
                 {
@@ -52,12 +53,32 @@
                             library.get_borrowed_books();
                             break;
                         }
-                        case 5:
+                    case 5:
                         {
                             Console.WriteLine("Enter name of Author");
                             string author = Console.ReadLine();
                             library.get_books_by_author(author);
                             break;
+                        }
+                    case 6:
+                        {
+                            Console.WriteLine("Enter Name of Genre");
+                            string genre = Console.ReadLine();
+                            library.get_books_by_genre(genre);
+                            break;
+                        }
+                    case 7:
+                        {
+                            Console.WriteLine("Enter ID");
+                            int id = int.Parse(Console.ReadLine());
+                            library.get_book_details(id);
+                            break;
+                        }
+
+                    case 8:
+                        {
+
+
                         }
                 }
             }
