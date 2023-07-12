@@ -83,3 +83,14 @@ BEGIN
 	END
 
 	EXEC DisplayBorrowedeBooks
+
+			-----------------------------get_books_by_author-------------------------------
+
+CREATE PROCEDURE get_books_by_author
+@author varchar(50)
+AS
+BEGIN
+	SELECT * FROM Books where author =  @author;
+	END
+
+	EXEC get_books_by_author 'i'

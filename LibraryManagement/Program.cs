@@ -11,6 +11,7 @@
                 Console.WriteLine("Press 2 : Display All Books");
                 Console.WriteLine("Press 3 : Display Avaliable Books");
                 Console.WriteLine("Press 4 : Display Borrowed Books");
+                Console.WriteLine("Press 5 : Display Books Bt Author Name");
                 int input = int.Parse(Console.ReadLine());
                 switch (input)
                 {
@@ -53,7 +54,9 @@
                         }
                         case 5:
                         {
-
+                            Console.WriteLine("Enter name of Author");
+                            string author = Console.ReadLine();
+                            library.get_books_by_author(author);
                             break;
                         }
                 }
