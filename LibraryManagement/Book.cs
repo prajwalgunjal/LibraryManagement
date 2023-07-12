@@ -8,10 +8,10 @@ namespace LibraryManagement
 {
     public class Book
     {
-        int book_id { get; set; }
-        string title { get; set; }
-        string author { get; set; }
-        string genre { get; set; }
-        string borrowed { get; set; }
+        public int Book_id { get; set; }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string Genre { get; set; }
+        public bool Borrowed { get; set; }
     }
 }
