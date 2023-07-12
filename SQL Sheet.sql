@@ -18,6 +18,7 @@ delete from Books where book_id =1
 	insert into Books values('1','a','a','a','a','411034','India','maharashtra')
 
 	SELECT * FROM Books;
+
 create table Borrower(
 	Id int Identity(1,1) primary key,
 	book_id int foreign key references Books(book_id),
@@ -61,3 +62,15 @@ BEGIN
 	END
 
 	EXEC DisplayBooks
+
+	------------------------------Display Avaliable Books -------------------------------
+
+CREATE PROCEDURE DisplayAvaliableBooks
+AS
+BEGIN
+	SELECT * FROM Books where borrowed =  0;
+	END
+
+	EXEC DisplayAvaliableBooks
+	insert into Books values(9,'i','i','i',1),(10,'u','u','u',1)
+	

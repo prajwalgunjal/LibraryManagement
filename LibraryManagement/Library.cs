@@ -93,7 +93,46 @@ namespace LibraryManagement
             }
 
         }
-        public void get_available_books() { }
+        public bool get_available_books() {
+
+            try
+            {
+                List<Book> list = new List<Book>();
+                sqlConnection.Open();
+                string Query = "DisplayAvaliableBooks";
+                SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection);
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    Book book = new Book()
+                    {
+                        Book_id = (int)reader["book_id"],
+                        Title = (string)reader["title"],
+                        Author = (string)reader["author"],
+                        Genre = (string)reader["genre"],
+                        Borrowed = (bool)reader["borrowed"],
+                    };
+                    list.Add(book);
+                }
+                foreach (Book book in list)
+                {
+                    Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
+                        $"\t Genre:- {book.Genre}  \t Borrowed: - {book.Borrowed}");
+                }
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine("Something went wrong");
+                return false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
         public void get_borrowed_books(){ }
       /*  public void get_books_by_author(author) { }
 

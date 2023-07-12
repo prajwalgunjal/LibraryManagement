@@ -9,6 +9,7 @@
             while (true) {
                 Console.WriteLine("Press 1 : Add New Book");
                 Console.WriteLine("Press 2 : Display All Books");
+                Console.WriteLine("Press 3 : Display Avaliable Books");
                 int input = int.Parse(Console.ReadLine());
                 switch (input)
                 {
@@ -35,6 +36,12 @@
                     case 2:
                         {
                             library.get_total_books();
+                            break;
+                        }
+
+                    case 3:
+                        {
+                            library.get_available_books();
                             break;
                         }
                 }
