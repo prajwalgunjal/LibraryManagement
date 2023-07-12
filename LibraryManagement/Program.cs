@@ -32,11 +32,11 @@
                             library.add_book(book);
                             break;
                         }
-                      /*  case 2:
+                    case 2:
                         {
                             library.get_total_books();
                             break;
-                        }*/
+                        }
                 }
             }
         }

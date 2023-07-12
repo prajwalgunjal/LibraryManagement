@@ -52,7 +52,8 @@ namespace LibraryManagement
             }
         }
 
-        /*public bool get_total_books() {
+        public bool get_total_books()
+        {
             try
             {
                 List<Book> list = new List<Book>();
@@ -91,8 +92,8 @@ namespace LibraryManagement
                 sqlConnection.Close();
             }
 
-        }*/
-         public void get_available_books() { }
+        }
+        public void get_available_books() { }
         public void get_borrowed_books(){ }
       /*  public void get_books_by_author(author) { }
 
