@@ -20,6 +20,7 @@ namespace LibraryManagement
             try
             {
                 sqlConnection.Open();
+                
                 string query = "AddBook";
                 SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
@@ -75,8 +76,6 @@ namespace LibraryManagement
                 }
                 foreach (Book book in list)
                 {
-                    /*Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
-                        $"\t Genre:- {book.Genre}  \t Borrowed: - {book.Borrowed}");*/
                     Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
                         $"\t Genre:- {book.Genre}  ");
                 }
@@ -93,7 +92,6 @@ namespace LibraryManagement
             {
                 sqlConnection.Close();
             }
-
         }
         public bool get_available_books() {
 
@@ -111,16 +109,13 @@ namespace LibraryManagement
                         Book_id = (int)reader["book_id"],
                         Title = (string)reader["title"],
                         Author = (string)reader["author"],
-                        Genre = (string)reader["genre"],
-                        Borrowed = (bool)reader["borrowed"],
+                        Genre = (string)reader["genre"]
                     };
                     list.Add(book);
                 }
                 foreach (Book book in list)
                 {
-                   /* Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
-                        $"\t Genre:- {book.Genre}  \t Borrowed: - {book.Borrowed}");*/
-                    Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
+                  Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
                         $"\t Genre:- {book.Genre} ");
                 }
                 return true;
@@ -153,17 +148,15 @@ namespace LibraryManagement
                         Title = (string)reader["title"],
                         Author = (string)reader["author"],
                         Genre = (string)reader["genre"],
-                        Borrowed = (bool)reader["borrowed"],
+                        NameOfBorrower = (string)reader["Name_Of_Borrower"]
                     };
                     list.Add(book);
                 }
                 foreach (Book book in list)
                 {
 
-                    /* Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
-                         $"\t Genre:- {book.Genre}  \t Borrowed: - {book.Borrowed}");*/
                     Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
-                        $"\t Genre:- {book.Genre}");
+                        $"\t Genre:- {book.Genre} \t Name Of Borrower:- {book.NameOfBorrower}");
                 }
                 return true;
             }
@@ -248,9 +241,6 @@ namespace LibraryManagement
                 }
                 foreach (Book book in list)
                 {
-
-                    /* Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
-                         $"\t Genre:- {book.Genre}  \t Borrowed: - {book.Borrowed}");*/
                     Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
                         $"\t Genre:- {book.Genre}");
 
@@ -278,7 +268,7 @@ namespace LibraryManagement
                 SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                 sqlCommand.Parameters.AddWithValue("@book_id", book_id);
-                SqlDataReader reader = sqlCommand.ExecuteReader();
+                SqlDataReader reader = sqlCommand.ExecuteReader();  
                 while (reader.Read())
                 {
                     Book book = new Book()
@@ -293,9 +283,6 @@ namespace LibraryManagement
                 }
                 foreach (Book book in list)
                 {
-
-                    /* Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
-                         $"\t Genre:- {book.Genre}  \t Borrowed: - {book.Borrowed}");*/
                     Console.WriteLine($"Book_id: {book.Book_id}\t Title:- {book.Title}\t Author:- {book.Author}" +
                         $"\t Genre:- {book.Genre}");
 
@@ -314,9 +301,74 @@ namespace LibraryManagement
             }
 
         }
-        /*public void borrow_book(book_id, borrower) { }
-       public void return_book(book_id) { }
-        */
+        public bool borrow_book(int book_id, string borrower) 
+        {
+            try
+            {
+                sqlConnection.Open();
+                string Query = $"usp_Borrow_Book";
+                SqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
+                SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection,sqlTransaction);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("@bookid", book_id);
+                sqlCommand.Parameters.AddWithValue("@BoorowerName", borrower);
+                try
+                {
+                    int result = sqlCommand.ExecuteNonQuery();
+                    sqlTransaction.Commit();
+                    Console.WriteLine("Book Issued");
+                }
+                catch (Exception)
+                {
+                    sqlTransaction.Rollback();
+                    Console.WriteLine("Rolling Back ");
+                    Console.WriteLine("something wrong");
+                }
+                
+                return true;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Something went wrong ");
+                sqlConnection.Close();
+                return false;
+            }
+            finally{
+                sqlConnection.Close();
+            }
+           
+        }
+        
+       /*public bool return_book(int book_id) 
+       {
 
+            try
+            {
+                sqlConnection.Open();
+                string Query = $"Return_Book";
+                SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("@bookid", book_id);
+                int result = sqlCommand.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    Console.WriteLine("Book returned");
+                }
+                else
+                {
+                    Console.WriteLine("Something went wrong");
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Something went wrong ");
+                Console.WriteLine(ex);
+                sqlConnection.Close();
+                return false;
+            }
+            finally { sqlConnection.Close(); }
+           
+        }*/
     }
 }

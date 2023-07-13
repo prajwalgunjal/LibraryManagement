@@ -13,5 +13,7 @@ namespace LibraryManagement
         public string Author { get; set; }
         public string Genre { get; set; }
         public bool Borrowed { get; set; }
+
+        public string NameOfBorrower { get; set; }
     }
 }

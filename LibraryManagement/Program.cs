@@ -13,6 +13,8 @@
                 Console.WriteLine("Press 5 : Display Books By Author Name");
                 Console.WriteLine("Press 6 : Display Books By Genre Name");
                 Console.WriteLine("Press 7 : Display Books By Id");
+                Console.WriteLine("Press 8 : Borrow Book");
+                Console.WriteLine("Press 9 : Return Book");
                 int input = int.Parse(Console.ReadLine());
                 switch (input)
                 {
@@ -74,12 +76,22 @@
                             library.get_book_details(id);
                             break;
                         }
-
                     case 8:
                         {
-
-
+                            Console.WriteLine("Enter Id of the book");
+                            int id = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter Your name ");
+                            string name = Console.ReadLine();
+                            library.borrow_book(id, name);
+                            break;
                         }
+                   /* case 9:
+                        {
+                            Console.WriteLine("Enter Id of the book");
+                            int id = int.Parse(Console.ReadLine());
+                            library.return_book(id);
+                            break;
+                        }*/
                 }
             }
         }

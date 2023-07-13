@@ -11,20 +11,29 @@ create table Books(
 	 borrowed  bit
 	)
 
+
+	-------------------------------------------
+	create table Borrower(
+	Id int Identity(1,1) primary key,
+	book_id int foreign key references Books(book_id),
+	Name_Of_Borrower varchar(50)
+	)
+
+
+
+
+	--------------------------------------
 	ALTER TABLE Books
 ALTER COLUMN borrowed bit;
 
-delete from Books where book_id =1 
+delete from Books where borrowed=0 
 
 	insert into Books values('1','a','a','a','a','411034','India','maharashtra')
 
 	SELECT * FROM Books;
 
-create table Borrower(
-	Id int Identity(1,1) primary key,
-	book_id int foreign key references Books(book_id),
-	Name_Of_Borrower varchar(50)
-	)
+
+
 
 ------------------------------ ADD BOOK ------------------------------ 
 alter PROCEDURE AddBook
@@ -59,7 +68,10 @@ EXEC AddBook
 ALTER PROCEDURE DisplayBooks
 AS
 BEGIN
-	
+	--DECLARE @BookCount int
+	--SELECT @BookCount = COUNT(title) from Books
+
+	--SELECT @BookCount AS TOTALBooks
 	SELECT * FROM Books;
 	END
 
@@ -67,7 +79,7 @@ BEGIN
 
 	------------------------------Display Avaliable Books -------------------------------
 
-CREATE PROCEDURE DisplayAvaliableBooks
+alter PROCEDURE DisplayAvaliableBooks
 AS
 BEGIN
 	SELECT * FROM Books where borrowed =  0;
@@ -77,10 +89,10 @@ BEGIN
 -----insert into Books values(9,'i','i','i',1),(10,'u','u','u',1)
 		------------------------------Display Borrowed Books -------------------------------
 
-CREATE PROCEDURE DisplayBorrowedeBooks
+alter PROCEDURE DisplayBorrowedeBooks
 AS
 BEGIN
-	SELECT * FROM Books where borrowed =  1;
+		SELECT c.book_id,c.title,c.author,c.genre,p.Name_Of_Borrower From Books AS c JOIN Borrower As p ON c.book_id = p.book_id where c.borrowed =1 
 	END
 
 	EXEC DisplayBorrowedeBooks
@@ -117,3 +129,58 @@ BEGIN
 	END
 
 	EXEC get_books_by_book_id 8
+
+
+
+	------------------------------borrow book
+	SELECT * From Books AS c JOIN Borrower As p ON c.book_id = p.book_id 
+		SELECT c.book_id,c.title,c.genre,p.Name_Of_Borrower From Books AS c JOIN Borrower As p ON c.book_id = p.book_id	where p.book_id =1 
+
+alter PROCEDURE usp_Borrow_Book
+(
+	@bookid int,
+	@BoorowerName varchar(50)
+)
+as
+begin
+	if exists (select * from Books where book_id = @bookid and borrowed = 0)
+	begin
+
+		insert into Borrower (book_id,Name_Of_Borrower)
+		values (@bookid,@BoorowerName)
+
+		update Books
+		set borrowed = 1
+		where book_id = @bookid
+	end
+	else
+	begin
+	print 'Book Not Found or Issued By Someone'
+	end
+end
+
+usp_Borrow_Book 2,'Patil'
+
+-----------------------------------return book
+
+CREATE PROCEDURE Return_Book
+(
+	@bookid int
+)
+as
+begin
+	if exists (select * from Books where book_id = @bookid and borrowed = 1)
+	begin
+		delete Borrower where book_id = @bookid;
+		update Books
+		set borrowed = 0
+		where book_id = @bookid
+	end
+	else
+	begin
+	print 'Book returned'
+	end
+end
+
+Return_Book 2
+
