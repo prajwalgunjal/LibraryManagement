@@ -338,9 +338,9 @@ namespace LibraryManagement
             }
            
         }
-        
-       /*public bool return_book(int book_id) 
-       {
+
+        public bool return_book(int book_id)
+        {
 
             try
             {
@@ -368,7 +368,7 @@ namespace LibraryManagement
                 return false;
             }
             finally { sqlConnection.Close(); }
-           
-        }*/
+
+        }
     }
 }

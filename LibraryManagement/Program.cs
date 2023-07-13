@@ -85,13 +85,13 @@
                             library.borrow_book(id, name);
                             break;
                         }
-                   /* case 9:
+                    case 9:
                         {
                             Console.WriteLine("Enter Id of the book");
                             int id = int.Parse(Console.ReadLine());
                             library.return_book(id);
                             break;
-                        }*/
+                        }
                 }
             }
         }
